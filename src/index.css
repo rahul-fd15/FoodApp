@@ -1,0 +1,56 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.carousel-item img{
+  height: 400px;
+  object-fit: cover;
+}
+.food-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.food-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+.AboutPage{
+  /* background-image: url('/header_img.png');  */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.ContactPage {
+  min-height: 100vh;
+}
+.ContactPage input,
+.ContactPage textarea {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.ContactPage button {
+  background-color: #28a745;
+  border: none;
+}
+.ContactPage button:hover {
+  background-color: #218838;
+}
+.foodSearch{
+  max-width: 300px;
+  /* margin-left: 20px; */
+}
+
+
+.app-container {
+  background-color: #ffffff;
+  color: #000000;
+  min-height: 100vh;
+}
+
+
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
