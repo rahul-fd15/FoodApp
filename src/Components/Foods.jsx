@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { food_list } from "../assets/fooditems/assets";
 
+import { useDispatch } from "react-redux"
+import { addToCart } from "../redux/cartSlice.jsx"
+
 const Foods = () => {
   const [sortOption, setSortOption] = useState("");
   const [search,setSearch]=useState('')
 
+  const dispatch=useDispatch()
 
 
   const sortedFoods = [...food_list].filter(food=>food.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ).sort((a,b)=> {
@@ -50,7 +54,7 @@ const Foods = () => {
                 <h5 className="card-title">{food.name}</h5>
                 <p className="card-text">{food.description}</p>
                 <p className="card-text fw-bold">${food.price}</p>
-                <button className="btn btn-success px-4 py-2 rounded">
+                <button className="btn btn-success px-4 py-2 rounded" onClick={()=>dispatch(addToCart(food))}>
                   Add to cart
                 </button>
               </div>
