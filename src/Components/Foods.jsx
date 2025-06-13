@@ -1,29 +1,43 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { food_list } from "../assets/fooditems/assets";
 
-import { useDispatch } from "react-redux"
-import { addToCart } from "../redux/cartSlice.jsx"
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice.jsx";
 
 const Foods = () => {
   const [sortOption, setSortOption] = useState("");
-  const [search,setSearch]=useState('')
-
-  const dispatch=useDispatch()
-
-
-  const sortedFoods = [...food_list].filter(food=>food.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ).sort((a,b)=> {
-    if (sortOption === "low-to-high") {
-      return a.price - b.price;
-    } else if (sortOption === "high-to-low") {
-      return b.price - a.price;
+  const [search, setSearch] = useState("");
+   const [addedFoods, setAddedFoods] = useState([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const storedItems = localStorage.getItem("foodItems");
+    if (storedItems) {
+      setAddedFoods(JSON.parse(storedItems));
     }
-  });
+  }, []);
+  const combinedFoods = [...food_list, ...addedFoods];
+  const sortedFoods = combinedFoods
+    .filter((food) =>
+      food.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOption === "low-to-high") {
+        return a.price - b.price;
+      } else if (sortOption === "high-to-low") {
+        return b.price - a.price;
+      }
+    });
   return (
     <div className="container mt-4">
       <div>
         <div className="d-flex align-items-center justify-content-between mb-4 gap-5">
           <h2 className="mb-4">All Foods</h2>
-          <input type="search" className="foodSearch form-control" placeholder="search" onChange={(e)=>setSearch(e.target.value)}/>
+          <input
+            type="search"
+            className="foodSearch form-control"
+            placeholder="search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
 
         <select
@@ -52,9 +66,12 @@ const Foods = () => {
               />
               <div className="card-body">
                 <h5 className="card-title">{food.name}</h5>
-                <p className="card-text">{food.description}</p>
+                {/* <p className="card-text">{food.description}</p> */}
                 <p className="card-text fw-bold">${food.price}</p>
-                <button className="btn btn-success px-4 py-2 rounded" onClick={()=>dispatch(addToCart(food))}>
+                <button
+                  className="btn btn-success px-4 py-2 rounded"
+                  onClick={() => dispatch(addToCart(food))}
+                >
                   Add to cart
                 </button>
               </div>
